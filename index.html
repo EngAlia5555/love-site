@@ -10,7 +10,7 @@ body {
   margin: 0;
   overflow: hidden;
   height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,35 +18,39 @@ body {
   color: white;
 }
 
-/* Intro overlay */
+/* Intro */
 #intro {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: black;
+  background: radial-gradient(circle, #1a0000, black);
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   z-index: 10;
+}
+
+#intro button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 15px;
+  background: pink;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
   cursor: pointer;
+  box-shadow: 0 0 25px pink;
+  transition: 0.3s;
 }
 
-#intro h2 {
-  font-size: 22px;
-  color: pink;
-  text-align: center;
-  animation: glow 2s infinite alternate;
+#intro button:hover {
+  transform: scale(1.1);
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px red; }
-  to { text-shadow: 0 0 25px pink; }
-}
-
+/* Text */
 h1 {
   text-align: center;
-  font-size: 48px;
+  font-size: 52px;
   z-index: 2;
   text-shadow: 0 0 20px red, 0 0 40px pink;
   animation: floatText 3s ease-in-out infinite;
@@ -54,13 +58,13 @@ h1 {
 
 @keyframes floatText {
   0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
 }
 
+/* Hearts */
 .heart {
   position: absolute;
-  color: red;
-  font-size: 18px;
+  font-size: 20px;
   animation: floatUp linear forwards;
   filter: drop-shadow(0 0 10px red);
 }
@@ -71,48 +75,33 @@ h1 {
     opacity: 1;
   }
   100% {
-    transform: translateY(-10vh) scale(1.6);
+    transform: translateY(-10vh) scale(1.7);
     opacity: 0;
   }
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 10px;
-  background: pink;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Intro screen -->
-<div id="intro" onclick="startSite()">
-  <h2>💖 Click anywhere to open your surprise 💖</h2>
+<!-- Intro -->
+<div id="intro">
+  <button onclick="startSite()">💖 Open Your Surprise 💖</button>
 </div>
 
-<h1>بحبك ❤️<br>– عمرو</h1>
+<!-- Main text -->
+<h1>بحبك ❤️<br>عمرو</h1>
 
-<!-- Hidden audio (better than YouTube iframe) -->
+<!-- Romantic audio -->
 <audio id="song" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3c6b2b8c7e.mp3?filename=romantic-love-ambient-110397.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-let started = false;
-
 function startSite() {
-  if (started) return;
-  started = true;
-
   document.getElementById("intro").style.display = "none";
 
-  // play audio
+  // play music
   const song = document.getElementById("song");
   song.play();
 
@@ -123,7 +112,10 @@ function startSite() {
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
+
+  const colors = ["#ff0000", "#ff4d6d", "#ff85a2"];
   heart.innerHTML = "❤️";
+  heart.style.color = colors[Math.floor(Math.random() * colors.length)];
 
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (Math.random() * 25 + 15) + "px";
